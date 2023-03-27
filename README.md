@@ -12,9 +12,12 @@ cases, such as
   passwords which you may specifically _not_ want to sync elsewhere)
 
 This script ships with bash completion that enables `pw` to run with a
-similar workflow to `pass`. Note that it is currently _not_ implemented
-as a `pass` extension (see https://www.passwordstore.org/#extensions),
-but this may change in the future.
+similar workflow to `pass`. Note that `pass` must be installed with its
+own bash completion for this functionality to work.
+
+Note also that `pw` is currently _not_ implemented as a proper `pass`
+extension (see https://www.passwordstore.org/#extensions), but this may
+change in the future.
 
 `pw` is released under the MIT license.
 
