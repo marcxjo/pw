@@ -16,8 +16,8 @@ _pw() {
       unset pwstores
       ;;
     *)
-      PW_STORE_DIR_NAME="${COMP_WORDS[1]}"
-      PASSWORD_STORE_DIR="${prefix}${PW_STORE_DIR_NAME}"
+      local pwstore_dir_name="${COMP_WORDS[1]}"
+      local pwstore_dir_path="${prefix}${pwstore_dir_name}"
 
       # pass expects the first arg to be a verb, so we have to fake the input
       # to its completion routine to look like it's been called directly, with
@@ -27,8 +27,8 @@ _pw() {
       COMP_WORDS=( ${COMP_WORDS[@]/${COMP_WORDS[1]}} )
       COMP_LINE="${COMP_WORDS[@]}"
       COMP_CWORD=$(( ${COMP_CWORD} - 1 ))
-      let COMP_POINT=$(( ${COMP_POINT} - ${#PW_STORE_DIR_NAME} + 1 ))
-      _pass
+      let COMP_POINT=$(( ${COMP_POINT} - ${#pwstore_dir_name} + 1 ))
+      PASSWORD_STORE_DIR="${pwstore_dir_path}" _pass
       ;;
   esac
 }
