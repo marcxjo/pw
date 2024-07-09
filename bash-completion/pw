@@ -23,9 +23,7 @@ _pw() {
       # to its completion routine to look like it's been called directly
       # Yes, this is absolutely filthy
 
-      PASS_ARGS=${COMP_WORDS[@]:2}
-      COMP_WORDS=(pass)
-      COMP_WORDS+=( ${PASS_ARGS[@]} )
+      COMP_WORDS=( ${COMP_WORDS[@]/${COMP_WORDS[1]}} )
       COMP_LINE="${COMP_WORDS[@]}"
       COMP_CWORD=$(( ${COMP_CWORD} - 1 ))
       let COMP_POINT=$(( ${COMP_POINT} - ${#PW_STORE_DIR_NAME} + 1 ))
