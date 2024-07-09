@@ -20,7 +20,8 @@ _pw() {
       PASSWORD_STORE_DIR="${prefix}${PW_STORE_DIR_NAME}"
 
       # pass expects the first arg to be a verb, so we have to fake the input
-      # to its completion routine to look like it's been called directly
+      # to its completion routine to look like it's been called directly, with
+      # the store directory passed in as an envar
       # Yes, this is absolutely filthy
 
       COMP_WORDS=( ${COMP_WORDS[@]/${COMP_WORDS[1]}} )
