@@ -3,31 +3,31 @@ source /usr/share/bash-completion/completions/pass
 _pw() {
   COMPREPLY=()
   local cur="${COMP_WORDS[COMP_CWORD]}"
-  local prefix="${PW_ROOT:-${HOME}/.config/pass/}"
-  prefix="${prefix%/}/"
+  local prefix="${PW_ROOT:-${HOME}/.config/pass}"
 
   case ${COMP_CWORD} in
   1)
-    pwstores=("$(compgen -d "${prefix}${cur}")")
+    pwstores=($(compgen -d "${prefix%/}/${cur}"))
     for item in "${pwstores[@]}"; do
-      COMPREPLY+=("${item#"$prefix"}")
+      COMPREPLY+=("${item#${prefix%/}/}")
     done
     unset pwstores
     ;;
   *)
     local pwstore_dir_name="${COMP_WORDS[1]}"
-    local pwstore_dir_path="${prefix}${pwstore_dir_name}"
-    local pw_store_dir_len=${#pwstore_dir_name}
+    local pwstore_dir_path="${prefix%/}/${pwstore_dir_name}"
 
     # pass expects the first arg to be a verb, so we have to fake the input
     # to its completion routine to look like it's been called directly, with
     # the store directory passed in as an envar
     # Yes, this is absolutely filthy
+    local old_cmd_intro="${COMP_WORDS[*]:0:2}"
+    local new_cmd_intro="pass"
 
-    COMP_WORDS=('pass' "${COMP_WORDS[@]:2}")
+    COMP_WORDS=("${new_cmd_intro}" "${COMP_WORDS[@]:2}")
     COMP_LINE="${COMP_WORDS[*]}"
     COMP_CWORD=$((COMP_CWORD - 1))
-    ((COMP_POINT - pw_store_dir_len))
+    COMP_POINT=$((COMP_POINT - ${#old_cmd_intro} + ${#new_cmd_intro}))
     PASSWORD_STORE_DIR="${pwstore_dir_path}" _pass
     ;;
   esac
