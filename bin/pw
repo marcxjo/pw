@@ -11,5 +11,4 @@ CONFIG_ROOT=${PW_CONFIG_ROOT:-${HOME}/.config/pass}
 PW_STORE_DIR=${CONFIG_ROOT}/${1}
 shift 1
 
-exec env PASSWORD_STORE_DIR=${PW_STORE_DIR} pass ${@}
-
+exec env PASSWORD_STORE_DIR="${PW_STORE_DIR}" pass "${@}"
